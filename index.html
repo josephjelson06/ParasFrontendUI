@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlassDash Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              // Custom colors if needed
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      :root {
+        /* LIGHT MODE */
+        --bg-primary: #ffffff;
+        --text-primary: #0f172a; /* Slate 900 for high contrast black/dark text */
+        
+        /* UPDATED: Glass Effect for Inner Cards */
+        --glass-bg: rgba(255, 255, 255, 0.45); /* Translucent tint */
+        --glass-border: 1px solid rgba(255, 255, 255, 0.65); /* Visible Border */
+        
+        /* Updated Shadow: Drop shadow + Noticeable White Inner Glow */
+        --glass-shadow: 
+          0 4px 20px rgba(0, 0, 0, 0.03),
+          inset 0 0 20px rgba(255, 255, 255, 0.6); /* Soft inner glow */
+
+        --glass-blur: blur(12px); /* Blur behind the cards */
+      }
+
+      /* DARK MODE - Reference Image Style (High-Fidelity Glass) */
+      .dark {
+        --bg-primary: #050505; /* Deep Void Black */
+        --text-primary: #ffffff;
+        
+        /* Mockup Style: Gradient Transparency + sheen */
+        --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+        
+        /* Crisp, thin border */
+        --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+        
+        /* The Signature Glass Look: Deep Shadow + Sharp Top Highlight + ORANGE TINTED Glow */
+        --glass-shadow: 
+          0 25px 50px -12px rgba(0, 0, 0, 0.9),             /* Deep, heavy drop shadow */
+          inset 0 1px 0 rgba(255, 255, 255, 0.35),           /* The bright top edge reflection */
+          inset 0 0 30px rgba(249, 115, 22, 0.1);            /* Orange (Tailwind Orange-500) internal glow */
+
+        --glass-blur: blur(24px); /* Heavy blur for premium feel */
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        color: var(--text-primary);
+        transition: color 0.3s ease;
+        overflow: hidden;
+      }
+
+      /* BACKGROUNDS */
+      
+      .bg-theme-light {
+        background: linear-gradient(135deg, #a5f3fc 0%, #3b82f6 100%);
+        position: relative;
+      }
+      
+      /* Dark Theme Background: Deep Geometric Darkness */
+      .bg-theme-dark {
+        background-color: #050505;
+        background-image: 
+          radial-gradient(circle at 30% 20%, rgba(249, 115, 22, 0.05) 0%, transparent 40%),
+          linear-gradient(to bottom right, #050505, #000000);
+      }
+
+      /* Sidebar Glass Style */
+      .sidebar-glass {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: var(--glass-shadow);
+      }
+      .dark .sidebar-glass {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(24px);
+        /* Subtle orange glow in sidebar shadow too */
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(249, 115, 22, 0.05);
+      }
+
+      /* Main Panel Glass Style */
+      .main-panel-glass {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: var(--glass-shadow);
+      }
+      .dark .main-panel-glass {
+        background: transparent; /* Main panel remains transparent to let cards float on void */
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+
+      /* Widget Cards */
+      .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        border: var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        transition: all 0.3s ease;
+      }
+      
+      .glass-card:hover {
+        transform: translateY(-4px);
+      }
+      
+      /* Dark Mode Hover - Enhance the glow/reflection with stronger ORANGE tint */
+      .dark .glass-card:hover {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+        box-shadow: 
+          0 30px 60px -10px rgba(0, 0, 0, 1), 
+          inset 0 1px 0 rgba(255, 255, 255, 0.45), 
+          inset 0 0 40px rgba(249, 115, 22, 0.15); /* Stronger Orange Glow on Hover */
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.3); 
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(156, 163, 175, 0.5); 
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "react-dom": "https://esm.sh/react-dom@^19.2.4"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
